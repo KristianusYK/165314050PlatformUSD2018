@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="style.css" type="text/css"/>
+
+    </head>
+    <body>
+       <!-- Navbar -->
+        <div class="w3-top">
+            <div class="w3-bar w3-red w3-card w3-left-align w3-large">
+                <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+                <a href="HomeLogIn.html" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
+                <a href="LogLPasien.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Pasien</a>
+                <a href="TambahPasien.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Tambah Pasien</a>
+                <a href="LogLDokter.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Dokter</a>
+                <a href="TambahDokter.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Tambah Dokter</a>
+                <a href="LogLKlinik.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Klinik</a>
+                <a href="TambahKlinik.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Tambah Klinik</a>
+            </div>
+            <!-- Navbar on small screens -->
+            <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+                <a href="LogLPasien.html" class="w3-bar-item w3-button w3-padding-large">Pasien</a>
+                <a href="TambahPasien.html" class="w3-bar-item w3-button w3-padding-large">Tambah Pasien</a>
+                <a href="LogLDokter.html" class="w3-bar-item w3-button w3-padding-large">Dokter</a>
+                <a href="TambahDokter.html" class="w3-bar-item w3-button w3-padding-large">Tambah Dokter</a>
+                <a href="LogLKlinik.html" class="w3-bar-item w3-button w3-padding-large">Klinik</a>
+                <a href="TambahKlinik.html" class="w3-bar-item w3-button w3-padding-large">Tambah Klinik</a>
+            </div>
+        </div>
+
+        <h3>Contact Form</h3>
+
+        <section>
+            <div id="tambah">
+            <form method="post" onsubmit="return tambahPasien(this)">
+                <div class="form-group">
+                    <label for="noRm"><b>No. Reka Medis : </label>
+                    <input id="noRm" class="form-control" placeholder= "Masukan Nomor Reka Medis" type ="text">
+                </div> <br>
+                <div class="form-group">
+                    <label for="nama">Nama :</label> 
+                    <input id="nama"  class="form-control" placeholder= "Masukan Nama Anda" type="text">
+                </div><br>
+                <div class="form-group">
+                    <label for="alamat"><b>Alamat :</label> 
+                    <input id="alamat" class="form-control" placeholder="Masukan Alamat Anda" type="text">
+                </div><br>
+                <div class="form-group">
+                    <label for="nik">NIK :</label> 
+                    <input id="nik" class="form-control" placeholder="Masukan NIK Anda" type="text">
+                </div><br>
+                <div class="form-group">
+                    <label for="tglLahir">Tanggal Lahir :</label> 
+                    <input id="tglLahir" class="form-control" placeholder="Masukan Tanggal Lahir" type="text">
+                </div><br>
+                <div class="enam">
+                    <label for="jenisKelamin">Jenis Kelamin :</label> 
+                    <input id="jenisKelamin" class="form-control" placeholder="Masukan Jenis Kelamin" type="text">
+                </div><br>
+                <button type="submit" name="tambah" value="login" onclick="document.getElementById('tambah').style.display = 'none'; alert('Berhasil Menambahkan Pasien!'); window.open('LogLPasien.html', '_self');">Tambah</button>
+            </div>
+            </form>
+
+
+        </section>
+        <pre id ="undemo">
+
+        </pre>
+        <script>
+            function tambahPasien(form) {
+                var json = {
+                    "noRm": form.noRm.value,
+                    "nama": form.nama.value,
+                    "alamat": form.alamat.value,
+                    "nik": form.nik.value,
+                    "tanggalLahir": form.tglLahir.value,
+                    "kelamin": form.jenisKelamin.value
+                };
+                var html = JSON.stringify(json, 0, 100);
+                var Url = "http://202.94.83.190:8080/165314050_RSF/webresources/pasien/addPasien";
+                var xhr = new XMLHttpRequest();
+                xhr.open('post', Url, false);
+                xhr.setRequestHeader("content-type", "application/json");
+                xhr.send(html);
+                return false;
+            }
+        </script>
+    </body>
+</html>

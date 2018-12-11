@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="style.css" type="text/css"/>
+
+        <style>
+            th, td {
+                text-align: left;
+                padding: 13px;
+            }
+
+            tr:nth-child(even) {
+                background-color: #f2f2f2
+            }
+            * {
+                box-sizing: border-box;
+            }
+        </style>
+    </head>
+    <body onload ="loadDocPasien()" >
+        <!-- Navbar -->
+        <div class="w3-top">
+            <div class="w3-bar w3-red w3-card w3-left-align w3-large">
+                <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+                <a href="Home.html" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
+                <a href="LPasien.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Pasien</a>
+                <a href="LDokter.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Dokter</a>
+                <a href="LKlinik.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Klinik</a>
+
+            </div>
+
+            <!-- Navbar on small screens -->
+            <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+                <a href="LPasien.html" class="w3-bar-item w3-button w3-padding-large">Pasien</a>
+                <a href="LDokter.html" class="w3-bar-item w3-button w3-padding-large">Dokter</a>
+                <a href="LKlinik.html" class="w3-bar-item w3-button w3-padding-large">Klinik</a>
+
+            </div>
+        </div>
+        <br>
+        <br>
+        <p id = "getPasien">
+            
+        </p>
+        <script>
+            function loadDocPasien() {
+                var xhttp = new XMLHttpRequest();
+                var url = "http://202.94.83.190:8080/165314050_RSF/webresources/pasien";
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        table(this.responseText);
+                    }
+                }
+                function table(response) {
+                    var arr = JSON.parse(response);
+                    var i;
+                    var out = "<table>";
+                    out += "<tr><th> No Reka Medis </th><th> Nama </th><th> Alamat </th><th> NIK </th><th> Tanggal Lahir </th><th> Jenis Kelamin </th></tr>";
+                    for (i = 0; i < arr.length; i++) {
+                        out += "<tr><td>" + arr[i].noRm + "</td><td>" + arr[i].nama + "</td><td>"
+                                + arr[i].alamat + "</td><td>" + arr[i].nik + "</td><td>" + arr[i].tanggalLahir + "</td><td>"
+                                + arr[i].kelamin + "</td><td>" + "</td></tr>"
+                    }
+                    out += "</table>";
+                    document.getElementById("getPasien").innerHTML = out;
+                }
+                xhttp.open("GET", url, true);
+                xhttp.send();
+            }
+        </script>
+    </body>
+</html>
