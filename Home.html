@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+    <title>RS Abdi Dharma</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js"></script>
+
+    <script>
+        var map;
+        function initMap() {
+            var url = "http://202.94.83.190:8080/165314050_RSF/webresources/location";
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var obj = JSON.parse(this.responseText);
+                    map = new google.maps.Map(document.getElementById('map'), {center: {lat: obj[0].lat, lng: obj[0].lng}, zoom: 8});
+                    var marker = [];
+                    for (var i = 0; i < obj.length; i++) {
+                        marker[i] = new google.maps.Marker({position:
+                                    {lat: obj[i].lat, lng: obj[i].lng}, map: map});
+                    }
+                }
+            };
+            xhttp.open("GET", url, true);
+            xhttp.send();
+        }
+        google.maps.event.addDomListener(window, 'load', initMap);
+    </script>
+    <style>
+        body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+        .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+        .fa-anchor,.fa-coffee {font-size:200px}
+    </style>
+    <body>
+        <script>
+            function login() {
+                var json = {
+                    "email": document.getElementById("email").value,
+                    "password": document.getElementById("password").value
+                };
+                var html = JSON.stringify(json, 0, 100);
+                var url = "http://202.94.83.190:8080/165314050_RSF/webresources/user/login";
+                var xhr = new XMLHttpRequest();
+                xhr.open("post", url, true);
+                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.send(html);
+                xhr.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        if (this.responseText != "") {
+                            var username = document.getElementById("email").value;
+                            var password = document.getElementById("password").value;
+                            window.open("HomeLogIn.html", "_self");
+                        } else {
+                            alert('email atau password salah');
+                        }
+                    }
+                }
+
+            }
+        </script>
+        <!-- Navbar -->
+        <div class="w3-top">
+            <div class="w3-bar w3-red w3-card w3-left-align w3-large">
+                <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+                <a href="Home.html" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
+                <a href="LPasien.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Pasien</a>
+                <a href="LDokter.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Dokter</a>
+                <a href="LKlinik.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Klinik</a>
+
+            </div>
+
+            <!-- Navbar on small screens -->
+            <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+                <a href="LPasien.html" class="w3-bar-item w3-button w3-padding-large">Pasien</a>
+                <a href="LDokter.html" class="w3-bar-item w3-button w3-padding-large">Dokter</a>
+                <a href="LKlinik.html" class="w3-bar-item w3-button w3-padding-large">Klinik</a>
+
+            </div>
+        </div>
+
+        <!-- Header -->
+        <header class="w3-container w3-red w3-center" style="padding:128px 16px">
+            <h1 class="w3-margin w3-jumbo">SELAMAT DATANG</h1>
+            <h1 class="w3-margin w3-jumbo">DI RUMAH SAKIT ABDI DHARMA</h1>
+            <p class="w3-xlarge">Kepuasan dan kenyamanan anda adalah prioritas kami.</p>
+            <button onclick="document.getElementById('id01').style.display = 'block'" style="width:auto;">Login</button>
+
+            <div id="id01" class="modal">
+                <form class="modal-content animate" action="/action_page.php">
+                    <div class="imgcontainer">
+                        <span onclick="document.getElementById('id01').style.display = 'none'" class="close" title="Close Modal">&times;</span>
+                        <img src="Gambar/Login.png" alt="Avatar" class="avatar" style = "width: auto">
+                    </div>
+
+                    <div class="container">
+                        <label for="email"><b>Email</b></label>
+                        <input id="email" type="text" placeholder="Masukan Email" required>
+
+                        <label for="password"><b>Password</b></label>
+                        <input id="password" type="password" placeholder="masukan Password"  required>
+
+                        <button type="button" name="Login" value="Login" onclick="login()">Login</button>
+                    </div>
+
+                    <div class="container" style="background-color:#f1f1f1">
+                        <button type="button" onclick="document.getElementById('id01').style.display = 'none'" class="cancelbtn">Cancel</button>
+                        <span class="psw">Forgot <a href="#">password?</a></span>
+                    </div>
+                </form>
+            </div>
+
+            <script>
+                // Get the modal
+                var modal = document.getElementById('id01');
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+            </script>
+
+        </header>
+        <div class="container">
+            <h2>Rumah Sakit Yang Modern</h2>  
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                    <li data-target="#myCarousel" data-slide-to="3"></li>
+                    <li data-target="#myCarousel" data-slide-to="4"></li>
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <img src="Gambar/hospital1.jpg" alt="Gedung Yang Megah" style="width:100%;">
+                    </div>
+
+                    <div class="item">
+                        <img src="Gambar/hospital2.jpg" alt="Peralatan Yang Canggih" style="width:100%;">
+                    </div>
+
+                    <div class="item">
+                        <img src="Gambar/hospital3.jpg" alt="Ruang Reguler Yang Nyaman" style="width:100%;">
+                    </div>
+                    <div class="item">
+                        <img src="Gambar/hospital4.jpg" alt="Ruang Bisnis Yang Indah" style="width:100%;">
+                    </div>
+
+                    <div class="item">
+                        <img src="Gambar/hospital5.jpg" alt="Didukung Para Peneliti" style="width:100%;">
+                    </div>
+                </div>
+
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <!-- First Grid -->
+        <div class="w3-row-padding w3-padding-64 w3-container">
+            <div class="w3-content">
+                <div class="w3-twothird">
+                    <h1>Sejarah Rumah Sakit</h1>
+                    <h5 class="w3-padding-32">Rumah Sakit Abdi Dharama adalah rumah sakit yang telah berdiri selama kurang lebih 360 tahun. Pada awalnya rumah sakit ini hanyalah sebuah puskemas pada zaman Belanda.
+                        Tetapi oleh pemerintahan Indonesia akhrinya diubah menjadi rumah sakit bagi semua orang yang membutuhkan.</h5>
+
+                    <p class="w3-text-grey">Sejak saat itu rumah sakit ini telah bepindah-pindah kepemilikan, mulai dari pengusaha, hingga pemerintahan. Tetapi saat ini rumah sakit ini dimiliki oleh seorang pengusaha dibidang perkapalan.
+                        Oleh karena itu, dekorasi sangat kental akan aksesoris atau replika dari kapal-kapal. </p>
+                </div>
+
+                <div class="w3-third w3-center">
+                    <i class="fa fa-anchor w3-padding-64 w3-text-red"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Second Grid -->
+        <div class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
+            <div class="w3-content">
+                <div class="w3-third w3-center">
+                    <i class="fa fa-coffee w3-padding-64 w3-text-red w3-margin-right"></i>
+                </div>
+
+                <div class="w3-twothird">
+                    <h1>Spesialis</h1>
+                    <h5 class="w3-padding-32">Rumah Sakit Abdi Dharma adalah salah satu rumah sakit yang memiliki paling banyak dokter spesialis didunia. Mulai dari dokter umum, dokter hewan, tumbuhan, juga dokter kejiwaan</h5>
+
+                    <p class="w3-text-grey">Rumah sakit ini juga didukung penuh oleh organisasi kesehan dalam negeri dan dunia, seperti WHO (World Healt Organization) juga IDI (Ikatan Dokter Indonesia). 
+                        Oleh karena itu mulai dari ratu Inggris sampai pangeran Arab pun sering berobat di rumah sakit ini.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="w3-container w3-black w3-center w3-opacity w3-padding-64">
+            <h1 class="w3-margin w3-xlarge">Good Health, Good Life</h1>
+        </div>
+        <div id="map" style="width:100%;height:380px;"></div>
+        <!-- Footer -->
+        <footer class="w3-container w3-padding-64 w3-center w3-opacity">  
+
+            <p>Powered by Ikur1407</p>
+        </footer>
+
+        <script>
+            // Used to toggle the menu on small screens when clicking on the menu button
+            function myFunction() {
+                var x = document.getElementById("navDemo");
+                if (x.className.indexOf("w3-show") == -1) {
+                    x.className += " w3-show";
+                } else {
+                    x.className = x.className.replace(" w3-show", "");
+                }
+            }
+        </script>
+
+    </body>
+</html>
